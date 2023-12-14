@@ -1,0 +1,9 @@
+pyrightconfig.json
+__pycache__
+*.db
+notes.txt
+
+# Auto-generated files:
+*.css
+readme.html
+venv

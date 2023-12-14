@@ -1,0 +1,6 @@
+flask
+pyserial
+libsass
+flask-sqlalchemy
+pythonnet
+flask-cors
