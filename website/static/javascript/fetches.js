@@ -1,38 +1,28 @@
-function fetchPOST(endpoint, data){
-	// submit a POST request to an endpoint and put the response inside of response-container
-	fetch(endpoint, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(data),
-	})
-		.then(response => response.text())
-		.then(html =>{
-			updateResponseContainer(html)
-		});
+async function fetchPOST(endpoint, data) {
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.text();
 }
 
-async function asyncFetchPOST(endpoint, data){
-	// same as fetchPOST but returns a promise
-	await fetch(endpoint, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(data),
-	})
-		.then(response => response.text())
-		.then(html =>{
-			updateResponseContainer(html)
-		});
+async function listen() {
+  let data = {
+    args: [],
+  };
+  return await fetchPOST("/pman/listen", data);
 }
 
-async function listen(){
-	let active_config = JSON.parse(getCookie('active_config'))
-	let data = {
-		'com_port': active_config['com_port'],
-		'addr':active_config['addr'],
-	}
-	await asyncFetchPOST('/execute/listen',data) 
+async function transfer(from_port, to_port, volume) {
+  const args = [from_port, to_port, volume];
+  const data = { args: args };
+  const first_response = await fetchPOST("/pman/transfer", data);
+  console.log(first_response);
+  const second_response = await listen();
+  console.log(second_response)
+  return second_response;
 }
+const example_data = { args: [0, 1, 120] };

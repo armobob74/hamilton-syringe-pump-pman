@@ -1,3 +1,5 @@
+{% from "macros.html" import sidecard %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,15 +12,17 @@
     />
   </head>
   <body>
-    <div class="sidebar"></div>
+    <div class="sidebar">
+        {{ sidecard("Home", "/")}}
+        {{ sidecard("Transfer", "/transfer")}}
+    </div>
     <div class="main">
-	    <div class="content-container" id="content-container">
-		    {% block content %}
-		    {% endblock %}
-	    </div>
+      <div class="content-container" id="content-container">
+        {% block content %} {% endblock %}
+      </div>
       <div class="response-container" id="response-container"></div>
     </div>
-    <script src="/static/javascript/confirm_ranges.js" />
-    <script src="/static/javascript/fetches.js" />
+    <script src="/static/javascript/confirm_ranges.js"></script>
+    <script src="/static/javascript/fetches.js"></script>
   </body>
 </html>

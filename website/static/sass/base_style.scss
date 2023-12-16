@@ -47,6 +47,8 @@ body{
 	border-right:$window-border;
 
 	.sidecard{
+		text-decoration: none;
+		color:$txt-color-1;
 		padding-left: 30px;
 		padding: 10px;
 		display:flex;
