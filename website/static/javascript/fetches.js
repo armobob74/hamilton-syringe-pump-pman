@@ -20,9 +20,26 @@ async function transfer(from_port, to_port, volume) {
   const args = [from_port, to_port, volume];
   const data = { args: args };
   const first_response = await fetchPOST("/pman/transfer", data);
-  console.log(first_response);
   const second_response = await listen();
-  console.log(second_response)
   return second_response;
 }
+
+async function sendCustomCommand(cmdstr) {
+  // send command and return first response
+  // if second response is expected, use the listen() function
+  const args = [cmdstr];
+  const first_response = await fetchPOST("/pman/custom-cmd", { args: args });
+  return first_response;
+}
+async function oneResponseCommand(cmdstr) {
+  const response = await sendCustomCommand(cmdstr);
+  console.log("Response:",response);
+}
+async function twoResponseCommand(cmdstr) {
+  const response = await sendCustomCommand(cmdstr);
+  console.log("Response 1:", response);
+  const response_2 = await listen();
+  console.log("Response 2:", response_2);
+}
+
 const example_data = { args: [0, 1, 120] };

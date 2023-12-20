@@ -77,6 +77,8 @@ body{
 		overflow:auto;
 		resize:vertical;
 		flex-shrink:0;
+		display: flex;
+		flex-direction:column;
 		form {
 			display:flex;
 			flex-direction:column;

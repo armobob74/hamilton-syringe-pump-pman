@@ -26,8 +26,18 @@ def pmanTransfer():
     response_1 = communicator.send(str(transfer))
     return response_1
 
+@pman.route('/custom-cmd', methods=['POST'])
+def customCmd():
+    d = json.loads(request.data)
+    args = d['args']
+    data = args[0] # the string such as 'ZR' that tells pump what to do
+    communicator = Communicator()
+    response_1 = communicator.send(data)
+    return response_1
+
 @pman.route('/listen', methods=['POST'])
 def pmanListen():
     communicator = Communicator()
     response = communicator.readAnswer()
     return response
+
