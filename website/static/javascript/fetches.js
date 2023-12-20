@@ -1,3 +1,10 @@
+let respcon = document.getElementById("response-container");
+function display(s) {
+  let span = document.createElement("span");
+  span.textContent = s;
+  respcon.appendChild(span);
+}
+
 async function fetchPOST(endpoint, data) {
   const response = await fetch(endpoint, {
     method: "POST",
@@ -33,7 +40,7 @@ async function sendCustomCommand(cmdstr) {
 }
 async function oneResponseCommand(cmdstr) {
   const response = await sendCustomCommand(cmdstr);
-  console.log("Response:",response);
+  display("Response:" + response);
 }
 async function twoResponseCommand(cmdstr) {
   const response = await sendCustomCommand(cmdstr);

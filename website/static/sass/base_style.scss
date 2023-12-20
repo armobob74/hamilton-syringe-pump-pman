@@ -1,9 +1,9 @@
 $txt-color-1:black;
-$txt-color-2:darkgreen;
+$highlight-color:darkorange;
 $sidecard-bg-color:white;
-$primary-btn-bg-color:rgb(123, 219, 112);
+$primary-btn-bg-color:rgb(23, 58, 138);
 $secondary-btn-color:gray;
-$accent-color-1:green; //good for buttons
+$accent-color-1:rgb(16, 41, 97); //good for button bg
 $button-transition-time:0.15s;
 $border-color:$secondary-btn-color;
 $sidebar-bg-color:white;
@@ -168,7 +168,7 @@ button.execute{
 	border-color:$primary-btn-bg-color;
 	margin-top:1em;
 	margin-bottom:1em;
-	color:$txt-color-1;
+	color:white;
 }
 
 
@@ -209,5 +209,5 @@ input.error{
 }
 
 .unsaved-change{
-	color: $accent-color-1;
+	color: $highlight-color;
 }
