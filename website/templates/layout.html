@@ -13,10 +13,10 @@
   </head>
   <body>
     <div class="sidebar">
-      {{ sidecard("Home", "/")}}
-      {{ sidecard("Transfer", "/transfer")}}
-      {{ sidecard("Control", "/control")}}
-      {{ sidecard("Mix", "/mix")}}
+      {{ sidecard("Query", "/")}} {{ sidecard("Settings", "/settings")}} {{
+      sidecard("Control", "/control")}}
+      <hr />
+      {{ sidecard("Transfer", "/transfer")}} {{ sidecard("Mix", "/mix")}}
     </div>
     <div class="main">
       <div class="content-container" id="content-container">
@@ -26,6 +26,14 @@
     </div>
     <script src="/static/javascript/confirm_ranges.js"></script>
     <script src="/static/javascript/fetches.js"></script>
+    <script>
+      let sidecards = document.querySelectorAll(".sidecard");
+      for (const sidecard of sidecards) {
+        if (window.location.href === sidecard.href) {
+          sidecard.classList.add("active");
+        }
+      }
+    </script>
     {% block scripts %} {% endblock %}
   </body>
 </html>

@@ -22,3 +22,7 @@ def controlView():
 @views.route('/mix', methods=['GET'])
 def mixView():
     return render_template('mix.html')
+
+@views.route('/settings', methods=['GET'])
+def settingsView():
+    return render_template('settings.html')
