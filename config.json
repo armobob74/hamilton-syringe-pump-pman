@@ -1,0 +1,7 @@
+{
+    "syringe_size": 50,
+    "resolution": 13714,
+    "serial_port": "/dev/ttyUSB0",
+    "baud_rate": 9600,
+    "address": "1"
+}

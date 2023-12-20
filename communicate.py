@@ -1,14 +1,20 @@
 import serial
+import json
 
-syringe_size = 50 # mL
-resolution = 3000 # standard config
-syringe_usability = 0.9 # can use 90% of syringe before facing issues
+# Load configuration from config.json
+with open('config.json', 'r') as config_file:
+    config = json.load(config_file)
+
+# Set variables from the config file
+syringe_size = config.get('syringe_size', 50)  # Default to 50 if not specified
+resolution = config.get('resolution', 13714)  
+syringe_usability = config.get('syringe_usability', 1)  
+serial_port = config.get('serial_port', '/dev/ttyUSB0')
+baud_rate = config.get('baud_rate', 9600)  # Default to 9600 if not specified
+address = config.get('address', '1')  # Default to '1' if not specified
+
 max_draw_volume = syringe_usability * syringe_size
 max_height = int(syringe_usability * resolution)
-#serial_port = '/dev/ttyUSB0'
-serial_port = '/dev/pts/7'
-baud_rate = 9600
-address = '0' # set on machine physically
 
 class Communicator:
     def transfer_command_string(self, from_port, to_port, volume):
@@ -33,7 +39,7 @@ class Communicator:
             partial_transfers = ''
         else:
             partial_transfers = f"I{from_port}A{partial_transfer_steps}O{to_port}A0"
-        return partial_transfers + full_transfers
+        return partial_transfers + full_transfers + 'R'
     
     def terminal_protocal_command(self, data, address=address):
         """
@@ -77,7 +83,7 @@ class Communicator:
         """
         read the answer from the pump
         """
-        with serial.Serial(serial_port, baud_rate, timeout=5) as pump:
+        with serial.Serial(serial_port, baud_rate, timeout=10) as pump:
             response = pump.read_until(b'\r\n')
         return response
 
@@ -85,6 +91,12 @@ class Communicator:
         data = 'Q'
         response = self.send(data)
         print('response:',response)
+
+    def initialize(self):
+        resp_1 = self.send('ZR')
+        print('Resp 1:',resp_1)
+        resp_2 = self.readAnswer()
+        print('Resp 2:', resp_2)
 
 if __name__ == "__main__":
     com = Communicator()
