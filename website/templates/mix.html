@@ -12,6 +12,8 @@
 </form>
 {% endblock %} {% block scripts %}
 <script>
+  enforceCharset(`to_port`, digits);
+  enforceRange(`to_port`, 1, 8);
   function from_port(idnum) {
     return `
   <div style="display:flex; gap:1em;" class="from_port">
@@ -24,9 +26,14 @@
   }
 
   let from_port_idnum = 0;
+
   function addFromPort() {
     from_port_container.innerHTML += from_port(from_port_idnum);
     from_port_idnum += 1;
+    for (let i=0; i<from_port_idnum;i++) {
+      enforceCharset(`from_port_${i}`, digits);
+      enforceRange(`from_port_${i}`, 1, 8);
+    }
   }
   addFromPort();
 
