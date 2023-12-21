@@ -98,6 +98,14 @@ class Communicator:
         resp_2 = self.readAnswer()
         print('Resp 2:', resp_2)
 
+    def bufferIsEmpty(self):
+        """
+        idk if this works yet but adding it with hope of future work
+        """
+        resp = self.send('F')
+        d = self.parse_return_string(resp)
+        return d['data']
+
 if __name__ == "__main__":
     com = Communicator()
     com.queryStatus()

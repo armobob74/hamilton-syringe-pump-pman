@@ -49,4 +49,8 @@ async function twoResponseCommand(cmdstr) {
   console.log("Response 2:", response_2);
 }
 
+async function bufferIsEmpty(){
+	return await fetchPOST("/pman/buffer-is-empty")
+}
+
 const example_data = { args: [0, 1, 120] };

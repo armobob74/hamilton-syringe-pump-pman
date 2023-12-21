@@ -41,3 +41,9 @@ def pmanListen():
     response = communicator.readAnswer()
     return response
 
+@pman.route('/buffer-is-empty', methods=['POST'])
+def bufferIsEmpty():
+    communicator = Communicator()
+    response = communicator.bufferIsEmpty()
+    return response
+
