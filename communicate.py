@@ -1,5 +1,6 @@
 import serial
 import json
+import pdb
 
 # Load configuration from config.json
 with open('config.json', 'r') as config_file:
@@ -64,7 +65,7 @@ class Communicator:
             # Extract content between /0 and <CR><LF>
             content = return_string[2:-2]
             etx_position = content.find(ETX)
-            return {"status_byte": content[:etx_position], "data": content[etx_position + 1:]}
+            return {"status_byte": content[0], "data": content[1:etx_position]}
 
         raise ValueError("Invalid return string format")
 
@@ -104,7 +105,14 @@ class Communicator:
         """
         resp = self.send('F')
         d = self.parse_return_string(resp)
-        return d['data']
+        ret = d['data']
+        # invert the response
+        if ret == "0":
+            ret = "1"
+        elif ret == "1":
+            ret = "0"
+
+        return ret
 
 if __name__ == "__main__":
     com = Communicator()

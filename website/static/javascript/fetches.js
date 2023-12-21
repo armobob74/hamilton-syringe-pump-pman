@@ -17,18 +17,26 @@ async function fetchPOST(endpoint, data) {
 }
 
 async function listen() {
+  // listen until the end of the command buffer
   let data = {
     args: [],
   };
-  return await fetchPOST("/pman/listen", data);
+  if(await bufferIsEmpty()){
+    return '' //nothing to listen for
+  }
+  let response = await fetchPOST("/pman/listen", data);
+  while(! await bufferIsEmpty()){
+    response = await fetchPOST("/pman/listen", data);
+  }
+  return response
 }
 
 async function transfer(from_port, to_port, volume) {
   const args = [from_port, to_port, volume];
   const data = { args: args };
   const first_response = await fetchPOST("/pman/transfer", data);
-  const second_response = await listen();
-  return second_response;
+  const final_response = await listen();
+  return final_response;
 }
 
 async function sendCustomCommand(cmdstr) {
@@ -50,7 +58,7 @@ async function twoResponseCommand(cmdstr) {
 }
 
 async function bufferIsEmpty(){
-	return await fetchPOST("/pman/buffer-is-empty")
+	return parseInt(await fetchPOST("/pman/buffer-is-empty"))
 }
 
 const example_data = { args: [0, 1, 120] };
