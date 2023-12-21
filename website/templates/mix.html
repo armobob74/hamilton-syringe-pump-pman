@@ -38,7 +38,7 @@
   addFromPort();
 
   async function commandMix() {
-    if (requireFormFilled()) {
+    if (!requireFormFilled()) {
       let second_response = "";
       let from_ports = document.querySelectorAll(".from_port");
       for (const from_port of from_ports) {
